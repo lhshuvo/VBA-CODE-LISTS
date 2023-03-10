@@ -1,0 +1,14 @@
+Sub RemoveNumericValues()
+    Dim lastRow As Long
+    lastRow = Range("E" & Rows.Count).End(xlUp).Row 'Get last row in column E
+    
+    Dim rng As Range
+    Set rng = Range("E1:E" & lastRow) 'Set the range to column E
+    
+    Dim cell As Range
+    For Each cell In rng
+        If InStr(1, cell.Value, "=") > 0 Then 'Check if cell contains "="
+            cell.Value = Left(cell.Value, InStr(1, cell.Value, "=") - 1) 'Remove numeric values after "="
+        End If
+    Next cell
+End Sub
