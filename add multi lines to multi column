@@ -1,0 +1,29 @@
+Sub SplitCellByLineBreak()
+
+    Dim lastRow As Long
+    Dim i As Long, j As Long
+    Dim arr() As String
+    
+    lastRow = Cells(Rows.Count, "E").End(xlUp).Row 'Get last row in column E
+    
+    For i = lastRow To 1 Step -1 'Loop through each row from bottom to top
+    
+        If InStr(Cells(i, "E").Value, Chr(10)) Then 'Check if cell contains line break
+            
+            arr = Split(Cells(i, "E").Value, Chr(10)) 'Split cell content by line break
+            
+            For j = LBound(arr) To UBound(arr) 'Loop through each line in array
+                
+                Rows(i + 1).Insert Shift:=xlDown 'Insert new row below current row
+                
+                Cells(i + 1, "E").Value = arr(j) 'Copy line from array to new row
+                
+            Next j
+            
+            Cells(i, "E").ClearContents 'Clear content of original cell
+            
+        End If
+    
+    Next i
+    
+End Sub
