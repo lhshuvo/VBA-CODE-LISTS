@@ -1,0 +1,35 @@
+Sub moveNumbers()
+    Dim lastRow As Long
+    Dim i As Long
+    Dim str As String
+    
+    ' Find the last row with data in Column E
+    lastRow = Cells(Rows.Count, "E").End(xlUp).Row
+    
+    ' Loop through all rows
+    For i = 1 To lastRow
+        ' Get the value in the cell
+        str = Cells(i, "E").Value
+        
+        ' Check if the cell contains a "=" sign
+        If InStr(str, "=") > 0 Then
+            ' Get the numeric value after the "=" sign
+            str = Mid(str, InStr(str, "=") + 1)
+            
+            ' Remove any leading or trailing spaces
+            str = Trim(str)
+            
+            ' Check if the remaining string is a number
+            If IsNumeric(str) Then
+                ' Move the number to Column F
+                Cells(i, "F").Value = str
+                
+                ' Remove the number from Column E
+                Cells(i, "E").Value = Replace(Cells(i, "E").Value, "=" & str, "")
+                
+                ' Remove any leading or trailing spaces
+                Cells(i, "E").Value = Trim(Cells(i, "E").Value)
+            End If
+        End If
+    Next i
+End Sub
