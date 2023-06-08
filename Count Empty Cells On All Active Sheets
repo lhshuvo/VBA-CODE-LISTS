@@ -1,0 +1,25 @@
+Sub CountEmptyCellsOnAllSheets()
+    Dim ws As Worksheet
+    Dim columnRange As Range
+    Dim emptyCount As Long
+    
+    ' Loop through each sheet in the workbook
+    For Each ws In ThisWorkbook.Sheets
+        ' Specify the column range in each sheet
+        Set columnRange = ws.Range("B1:B" & ws.Cells(ws.Rows.Count, "B").End(xlUp).Row)
+        
+        ' Reset the empty count for each sheet
+        emptyCount = 0
+        
+        ' Loop through each cell in the column range
+        Dim cell As Range
+        For Each cell In columnRange
+            If cell.Value = "" Then
+                emptyCount = emptyCount + 1
+            End If
+        Next cell
+        
+        ' Display the count of empty cells for each sheet
+        MsgBox "Number of empty cells in Column B of " & ws.Name & ": " & emptyCount
+    Next ws
+End Sub
